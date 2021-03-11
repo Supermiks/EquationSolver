@@ -1,0 +1,22 @@
+plugins {
+    id 'application'
+    id 'java'
+}
+
+mainClassName = 'com.supermiks.equationsolver.EquationSolver'
+
+run {
+    standardInput = System.in
+}
+
+test {
+    useJUnit()
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.13'
+}
