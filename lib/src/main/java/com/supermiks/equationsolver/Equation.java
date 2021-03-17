@@ -1,5 +1,7 @@
 package com.supermiks.equationsolver;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Equation {
@@ -30,7 +32,9 @@ public class Equation {
     String input;
     Scanner scanner = new Scanner(System.in);
 
-    while (true) {
+    System.out.println("Enter equation like ax^2 + bx + c = 0");
+
+    while (scanner.hasNext()) {
       try {
         input = scanner.nextLine();
         setExpression(input);
@@ -41,8 +45,24 @@ public class Equation {
     }
   }
 
+  public void solveEquation() {
+    List<Double> solutions = new ArrayList<Double>();
+    solutions = EquationSolverLibrary.getSolutions
+        (EquationSolverLibrary.getCoefficients(this));
+
+    System.out.println("Solutions of the " + toString() + ":");
+
+    if (solutions.isEmpty()) {
+      System.out.println("Negative discriminant!");
+    } else {
+      for (double solution : solutions) {
+        System.out.println(solution);
+      }
+    }
+  }
+
   @Override
   public String toString() {
-    return "Equation{" + expression + '\'' + '}';
+    return "Equation {" + expression + '}';
   }
 }

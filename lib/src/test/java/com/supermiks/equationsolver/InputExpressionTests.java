@@ -2,6 +2,8 @@ package com.supermiks.equationsolver;
 
 import org.junit.Test;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 
@@ -44,6 +46,12 @@ public class InputExpressionTests {
   }
 
   @Test
+  public void isInputValid_ExpressionWhereFirstCoefficientIsZero_ShouldReturnFalse() {
+    String input = "0x^2+14x+44=0";
+    assertFalse(EquationSolverLibrary.isInputValid(input));
+  }
+
+  @Test
   public void isInputValid_WrongFormatOfExpression1_ShouldReturnFalse() {
     String input = "ahj33x^2kh+vrklhfoii";
     assertFalse(EquationSolverLibrary.isInputValid(input));
@@ -72,4 +80,15 @@ public class InputExpressionTests {
     String input = "3x^3 + 3x + 4 = 0";
     assertFalse(EquationSolverLibrary.isInputValid(input));
   }
+
+  @Test
+  public void setExpression_WrongFormatOfExpression_ShouldReturnIllegalArgumentException() {
+    Throwable thrown = assertThrows(IllegalArgumentException.class, () -> {
+      Equation equation = new Equation("2x^2+3jjfojifjo");
+    });
+    assertNotNull(thrown.getMessage());
+  }
+
+
+
 }

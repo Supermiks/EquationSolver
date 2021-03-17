@@ -37,7 +37,7 @@ public class GetCoefficientsTests {
   }
 
   @Test
-  public void getCoefficients_EquationWithExspressionInUpperCase_ShouldReturnEquals() {
+  public void getCoefficients_EquationWithExpressionInUpperCase_ShouldReturnEquals() {
     Equation equation = new Equation("2X^2 + 4X - 3.03 = 0");
     double[] expectedCoefficients = {2, 4, -3.03};
 

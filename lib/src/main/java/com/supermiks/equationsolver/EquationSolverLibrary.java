@@ -1,16 +1,22 @@
 package com.supermiks.equationsolver;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class EquationSolverLibrary {
 
   private static final int COEFFICIENTS_COUNT = 3;
-  private static final String REGEX_FOR_INPUT_VALIDATION = "^-?\\d+(?:\\.\\d+)*x\\^2[+-]\\d+(?:\\.\\d+)*x[+-]\\d+(?:\\.\\d+)*=0$";
+  private static final String REGEX_FOR_INPUT_VALIDATION = "^-?(?:[1-9]\\d*(?:\\.\\d+)*|0(?:\\.\\d+)+)x\\^2[+-]\\d+(?:\\.\\d+)*x[+-]\\d+(?:\\.\\d+)*=0$";
   private static final String REGEX_TO_FIND_COEFFICIENTS = "-?\\d+(?:\\.\\d+)*";
   private static final String REGEX_TO_DELETE_DEGREE = "\\^2";
   private static final String REGEX_TO_DELETE_SPACES = "\\s+";
   private static final String REPLACE = "";
+
+  private static double a;
+  private static double b;
+  private static double c;
 
   public static boolean isInputValid(String input) {
     String changedInput = deleteSpaces(input);
@@ -38,6 +44,33 @@ public class EquationSolverLibrary {
     }
 
     return coefficients;
+  }
+
+  public static List<Double> getSolutions(double[] coefficients) {
+    transformCoefficients(coefficients);
+
+    double discriminant = calculateDiscriminant(coefficients);
+    List<Double> solutions = new ArrayList<>();
+
+    if (discriminant > 0) {
+      solutions.add((-b + Math.sqrt(discriminant)) / (2 * a));
+      solutions.add((-b - Math.sqrt(discriminant)) / (2 * a));
+    } else if (discriminant == 0) {
+      solutions.add(-b / 2 * a);
+    }
+    return solutions;
+  }
+
+  private static double calculateDiscriminant(double[] coefficients) {
+    transformCoefficients(coefficients);
+
+    return b * b - 4 * a * c;
+  }
+
+  private static void transformCoefficients(double[] coefficients) {
+    a = coefficients[0];
+    b = coefficients[1];
+    c = coefficients[2];
   }
 
   private static String deleteSpaces(String input) {
